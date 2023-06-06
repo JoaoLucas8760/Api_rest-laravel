@@ -28,6 +28,10 @@ Route::get('/products', ['App\Http\Controllers\Api\ProductController', 'index'])
 Route::post('/products', ['App\Http\Controllers\Api\ProductController', 'save']);
 Route::get('/products/{id}', ['App\Http\Controllers\Api\ProductController', 'show']);
 Route::put('/products', ['App\Http\Controllers\Api\ProductController', 'update']);
+Route::patch('/products', ['App\Http\Controllers\Api\ProductController', 'update']);
+Route::delete('/products/{id}', ['App\Http\Controllers\Api\ProductController', 'delete']);
+
+
 
 
 
