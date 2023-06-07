@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +25,16 @@ Route::get('/teste', function(){
 });
 
 
-Route::get('/products', ['App\Http\Controllers\Api\ProductController', 'index']);
-Route::post('/products', ['App\Http\Controllers\Api\ProductController', 'save']);
-Route::get('/products/{id}', ['App\Http\Controllers\Api\ProductController', 'show']);
-Route::put('/products', ['App\Http\Controllers\Api\ProductController', 'update']);
-Route::patch('/products', ['App\Http\Controllers\Api\ProductController', 'update']);
-Route::delete('/products/{id}', ['App\Http\Controllers\Api\ProductController', 'delete']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'save']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::put('/products', [ProductController::class, 'update']);
+Route::patch('/products', [ProductController::class, 'update']);
+Route::delete('/products/{id}', [ProductController::class, 'delete']);
+
+Route::resource('users', UserController::class);
+
+
 
 
 

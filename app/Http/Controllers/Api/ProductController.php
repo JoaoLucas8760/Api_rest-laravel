@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductCollection;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,18 +16,35 @@ class ProductController extends Controller
         $this->product = $product;
     }
 
-    public function index(){
+    public function index(Request $request){
+            $products = $this-> product;
 
-        $products = $this-> product->all();
 
-        return response()->json($products);
+            if($request->has('coditions')){
+                $expressions = explode(';', $request->get('coditions'));
+
+                foreach($expressions as $e){
+                    $exp = explode(':', $e);
+                   $products= $products->where($exp[0], $exp[1], $exp[2]);
+                }
+
+
+            }
+
+            if($request-> has('fields')){
+                $fields= $request->get('fields');
+                 $products = $products->selectRaw($fields);
+            }
+         return new ProductCollection($products->paginate(10));
     }
 
     public function show($id){
 
         $product = $this-> product->find($id);
 
-        return response()->json($product);
+
+        // return response()->json($product);
+        return new ProductResource($product);
     }
 
     public function save(Request $request){
